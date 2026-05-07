@@ -343,6 +343,25 @@
     opacity: 1;
   }
 
+  .test-inline-btn {
+    background: var(--emerald-pale);
+    border: 1px solid var(--emerald);
+    color: var(--emerald);
+    font-family: 'Amiri', serif;
+    font-size: 0.9rem;
+    padding: 0.3rem 0.9rem;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: inline-block;
+    margin-right: 0.5rem;
+  }
+
+  .test-inline-btn:hover {
+    background: var(--emerald);
+    color: #fff;
+  }
+
   .hint-text-display {
     display: none;
     font-size: 0.88rem;
@@ -580,7 +599,7 @@
   <div id="screen-hadith" class="screen">
     <div class="nav-bar">
       <button class="nav-btn" id="prev-range-btn" onclick="goPrevRange()">&#x2192; النطاق السابق</button>
-      <button class="nav-btn" onclick="showRangesScreen(currentKitabName)">العودة إلى النطاقات</button>
+      <button class="nav-btn" id="back-to-ranges-btn" onclick="goBackFromHadith()">العودة إلى النطاقات</button>
       <button class="nav-btn" id="next-range-btn" onclick="goNextRange()">النطاق التالي &#x2190;</button>
     </div>
     <div class="title-bar">
@@ -784,7 +803,15 @@ function renderKitabs() {
       <div class="card-btn-title">${kitab}</div>
       <div class="card-btn-desc">${toArabicNum(String(KITABS_MAP[kitab].length))} أحاديث</div>
     `;
-    btn.onclick = () => showRangesScreen(kitab);
+    btn.onclick = () => {
+      const ranges = KITAB_RANGES[kitab];
+      if (ranges.length === 1) {
+        currentKitabName = kitab;
+        showHadithsScreen(0);
+      } else {
+        showRangesScreen(kitab);
+      }
+    };
     grid.appendChild(btn);
 
     if (testSelect) {
@@ -836,6 +863,13 @@ function showHadithsScreen(rangeIndex) {
   document.getElementById('prev-range-btn').disabled = (rangeIndex === 0);
   document.getElementById('next-range-btn').disabled = (rangeIndex === ranges.length - 1);
   
+  const backBtn = document.getElementById('back-to-ranges-btn');
+  if (ranges.length === 1) {
+    backBtn.textContent = 'العودة إلى الكتب';
+  } else {
+    backBtn.textContent = 'العودة إلى النطاقات';
+  }
+  
   const grid = document.getElementById('hadith-grid');
   grid.innerHTML = '';
   
@@ -849,12 +883,13 @@ function showHadithsScreen(rangeIndex) {
       <div class="divider"></div>
       <div class="hint-section">
         <button class="hint-btn" id="hint-btn-${h.id}" onclick="showHint(event,'${h.id}')">تلميح</button>
+        <button class="test-inline-btn" onclick="startSingleTest(event, '${h.id}')">اختبار</button>
         <div class="hint-text-display" id="hint-text-${h.id}">${h.hint}</div>
       </div>
       <div class="tap-hint">اضغط على البطاقة لعرض الحديث كاملاً</div>
     `;
     card.addEventListener('click', (e) => {
-      if (e.target.classList.contains('hint-btn')) return;
+      if (e.target.classList.contains('hint-btn') || e.target.classList.contains('test-inline-btn')) return;
       openModal(h);
     });
     grid.appendChild(card);
@@ -873,6 +908,15 @@ function goNextRange() {
   const max = KITAB_RANGES[currentKitabName].length - 1;
   if (currentRangeIndex < max) {
     showHadithsScreen(currentRangeIndex + 1);
+  }
+}
+
+function goBackFromHadith() {
+  const ranges = KITAB_RANGES[currentKitabName];
+  if (ranges.length === 1) {
+    showKitabsScreen();
+  } else {
+    showRangesScreen(currentKitabName);
   }
 }
 
@@ -935,6 +979,7 @@ let testTargetKitab = null;
 let currentTestHadiths = [];
 let currentTestHadithIndex = 0;
 let isAnswerRevealed = false;
+let previousScreenBeforeTest = 'screen-kitabs';
 
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -956,10 +1001,11 @@ function closeTestModalOnOverlay(e) {
 }
 
 function exitTest() {
-  switchScreen('screen-kitabs');
+  switchScreen(previousScreenBeforeTest);
 }
 
 function startTest() {
+  previousScreenBeforeTest = 'screen-kitabs';
   testMode = document.getElementById('test-mode').value;
   testAnswerMethod = document.getElementById('test-answer-method').value;
   testFrontMode = document.getElementById('test-front-type').value;
@@ -973,6 +1019,24 @@ function startTest() {
     shuffleArray(currentTestHadiths);
   }
   currentTestHadithIndex = 0;
+  renderTestCard();
+}
+
+function startSingleTest(event, id) {
+  event.stopPropagation();
+  const h = HADITH_DATA.find(hadith => hadith.id == id);
+  if (!h) return;
+
+  previousScreenBeforeTest = 'screen-hadith';
+  testMode = 'sequential';
+  testAnswerMethod = 'with_writing';
+  testFrontMode = 'show'; // Shows bab title
+  testTargetKitab = h.kitab_name;
+  
+  currentTestHadiths = [h];
+  currentTestHadithIndex = 0;
+  
+  switchScreen('screen-test');
   renderTestCard();
 }
 

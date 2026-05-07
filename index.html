@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الْجَمْعُ بَيْنَ الصَّحِيحَيْنِ</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --parchment: #F5ECD7;
+    --parchment-dark: #EAD9BC;
+    --parchment-deep: #D4B896;
+    --ink: #2C1A0E;
+    --ink-light: #5C3D1E;
+    --emerald: #1B5E42;
+    --emerald-light: #2E8B63;
+    --emerald-pale: #E8F5EE;
+    --gold: #B8860B;
+    --gold-light: #DAA520;
+    --gold-pale: #FFF8E1;
+    --border: #C9A96E;
+    --shadow: rgba(44, 26, 14, 0.15);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Amiri', 'Scheherazade New', serif;
+    background-color: var(--parchment);
+    color: var(--ink);
+    min-height: 100vh;
+    direction: rtl;
+    background-image:
+      radial-gradient(circle at 20% 20%, rgba(184,134,11,0.06) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, rgba(27,94,66,0.06) 0%, transparent 50%),
+      url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23C9A96E' fill-opacity='0.12'%3E%3Cpath d='M30 0l3.5 6.06L30 5.25l-3.5.81L30 0zm0 60l3.5-6.06L30 54.75l-3.5-.81L30 60zM0 30l6.06-3.5L5.25 30l.81 3.5L0 30zm60 0l-6.06 3.5L54.75 30l-.81-3.5L60 30zM15 15l2.47 4.28L15 18.5l-2.47.78L15 15zm30 0l2.47 4.28L45 18.5l-2.47.78L45 15zm-30 30l2.47-4.28L15 41.5l-2.47-.78L15 45zm30 0l2.47-4.28L45 41.5l-2.47-.78L45 45z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  .header {
+    background: linear-gradient(135deg, var(--emerald) 0%, #0D3D28 100%);
+    padding: 2rem 2rem 1.5rem;
+    text-align: center;
+    border-bottom: 3px solid var(--gold);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23DAA520' fill-opacity='0.08'%3E%3Cpath d='M40 0 L46 14 L60 14 L49 22 L53 36 L40 28 L27 36 L31 22 L20 14 L34 14 Z'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 80px 80px;
+  }
+
+  .header-ornament {
+    color: var(--gold-light);
+    font-size: 1.1rem;
+    letter-spacing: 0.5rem;
+    opacity: 0.85;
+    margin-bottom: 0.4rem;
+  }
+
+  .header h1 {
+    color: #FFF8E1;
+    font-size: 2.1rem;
+    font-weight: 700;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    position: relative;
+  }
+
+  .header-subtitle {
+    color: rgba(255,248,225,0.7);
+    font-size: 0.95rem;
+    margin-top: 0.3rem;
+    font-style: italic;
+  }
+
+  .main-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+  }
+
+  /* ── SCREENS ── */
+  .screen { display: none; }
+  .screen.active { display: block; }
+
+  .section-label {
+    text-align: center;
+    color: var(--emerald);
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.05em;
+    opacity: 0.9;
+  }
+
+  .grid-layout {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.2rem;
+  }
+
+  .card-btn {
+    background: linear-gradient(135deg, #fff 60%, var(--gold-pale));
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 1.4rem 1.6rem;
+    cursor: pointer;
+    text-align: right;
+    transition: all 0.25s ease;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 2px 8px var(--shadow);
+  }
+
+  .card-btn::before {
+    content: '';
+    position: absolute;
+    right: 0; top: 0; bottom: 0;
+    width: 5px;
+    background: linear-gradient(to bottom, var(--emerald-light), var(--emerald));
+    border-radius: 0 12px 12px 0;
+  }
+
+  .card-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px var(--shadow);
+    border-color: var(--gold-light);
+    background: linear-gradient(135deg, #fff 40%, var(--gold-pale));
+  }
+
+  .card-btn-subtitle {
+    font-size: 0.78rem;
+    color: var(--gold);
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+    letter-spacing: 0.05em;
+  }
+
+  .card-btn-title {
+    font-size: 1.15rem;
+    color: var(--ink);
+    line-height: 1.65;
+    font-weight: 700;
+  }
+
+  .card-btn-desc {
+    margin-top: 0.6rem;
+    font-size: 0.82rem;
+    color: var(--emerald);
+    opacity: 0.8;
+  }
+
+  .settings-dropdown {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    z-index: 10;
+  }
+
+  .settings-dropdown select {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(218, 165, 32, 0.5);
+    color: #FFF8E1;
+    font-family: 'Amiri', serif;
+    font-size: 0.95rem;
+    padding: 0.3rem 0.6rem;
+    border-radius: 6px;
+    cursor: pointer;
+    outline: none;
+    backdrop-filter: blur(4px);
+    transition: all 0.2s ease;
+  }
+
+  .settings-dropdown select:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: var(--gold-light);
+  }
+
+  .settings-dropdown select option {
+    background: var(--emerald);
+    color: #FFF8E1;
+  }
+
+  body.hide-rawy .hadith-card-front-title,
+  body.hide-rawy .divider,
+  body.hide-rawy .hint-btn {
+    display: none !important;
+  }
+
+  body.hide-rawy .hint-text-display {
+    display: block !important;
+    margin-top: 0 !important;
+  }
+
+  body.hide-rawy .hadith-card {
+    padding-top: 2.8rem;
+  }
+
+  /* ── NAVIGATION AND BARS ── */
+  .nav-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .nav-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: var(--emerald);
+    color: #FFF8E1;
+    border: none;
+    border-radius: 8px;
+    padding: 0.55rem 1.2rem;
+    font-family: 'Amiri', serif;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s, opacity 0.2s;
+  }
+
+  .nav-btn:hover:not(:disabled) { background: var(--emerald-light); }
+
+  .nav-btn:disabled {
+    background: #9ca3af;
+    color: #f3f4f6;
+    cursor: not-allowed;
+    opacity: 0.8;
+  }
+
+  .title-bar {
+    background: linear-gradient(135deg, var(--emerald-pale), #fff);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem 1.4rem;
+    margin-bottom: 1.8rem;
+    text-align: center;
+  }
+
+  .title-bar-label {
+    font-size: 0.9rem;
+    color: var(--gold);
+    font-weight: 700;
+  }
+
+  .title-bar-name {
+    font-size: 1.3rem;
+    color: var(--emerald);
+    font-weight: 700;
+    line-height: 1.7;
+    margin-top: 0.2rem;
+  }
+
+  .hadith-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.3rem;
+  }
+
+  /* ── HADITH CARD ── */
+  .hadith-card {
+    background: #FFFDF7;
+    border: 1.5px solid var(--border);
+    border-radius: 14px;
+    padding: 1.3rem 1.3rem 1rem;
+    position: relative;
+    box-shadow: 0 2px 10px var(--shadow);
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+  }
+
+  .hadith-card::after {
+    content: '';
+    position: absolute;
+    inset: 5px;
+    border: 1px solid var(--parchment-deep);
+    border-radius: 10px;
+    pointer-events: none;
+    opacity: 0.5;
+  }
+
+  .hadith-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px var(--shadow);
+  }
+
+  .hadith-id-badge {
+    position: absolute;
+    top: 0.7rem;
+    left: 0.8rem;
+    background: var(--emerald);
+    color: #FFF8E1;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-family: 'Amiri', serif;
+    letter-spacing: 0.03em;
+  }
+
+  .hadith-card-front-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+    line-height: 1.5;
+  }
+
+  .divider {
+    height: 1px;
+    background: linear-gradient(to left, transparent, var(--border), transparent);
+    margin: 0.7rem 0;
+  }
+
+  .hint-section { margin-top: 0.6rem; }
+
+  .hint-btn {
+    background: var(--gold-pale);
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    font-family: 'Amiri', serif;
+    font-size: 0.9rem;
+    padding: 0.3rem 0.9rem;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: inline-block;
+  }
+
+  .hint-btn:hover:not(:disabled) {
+    background: var(--gold);
+    color: #fff;
+  }
+
+  .hint-btn:disabled {
+    cursor: default;
+    opacity: 1;
+  }
+
+  .hint-text-display {
+    display: none;
+    font-size: 0.88rem;
+    color: var(--ink-light);
+    font-style: italic;
+    line-height: 1.7;
+    background: var(--gold-pale);
+    border: 1px dashed var(--gold);
+    border-radius: 8px;
+    padding: 0.55rem 0.75rem;
+    margin-top: 0.5rem;
+  }
+
+  .hint-text-display.shown { display: block; }
+
+  .tap-hint {
+    font-size: 0.75rem;
+    color: var(--emerald);
+    opacity: 0.6;
+    margin-top: 0.8rem;
+    text-align: center;
+    font-style: italic;
+  }
+
+  /* ── MODAL ── */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(44, 26, 14, 0.55);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    backdrop-filter: blur(3px);
+  }
+
+  .modal-overlay.open { display: flex; }
+
+  .modal-box {
+    background: #FFFDF7;
+    border: 2px solid var(--border);
+    border-radius: 16px;
+    max-width: 680px;
+    width: 100%;
+    max-height: 88vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(44,26,14,0.35);
+    animation: modalIn 0.3s ease;
+  }
+
+  @keyframes modalIn {
+    from { transform: scale(0.92) translateY(20px); opacity: 0; }
+    to { transform: scale(1) translateY(0); opacity: 1; }
+  }
+
+  .modal-header {
+    background: linear-gradient(135deg, var(--emerald) 0%, #0D3D28 100%);
+    padding: 1.2rem 1.5rem 1rem;
+    border-radius: 14px 14px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    border-bottom: 2px solid var(--gold);
+  }
+
+  .modal-sahabi-info { flex: 1; }
+
+  .modal-label {
+    font-size: 0.78rem;
+    color: rgba(255,248,225,0.65);
+    margin-bottom: 0.15rem;
+  }
+
+  .modal-sahabi-name {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #FFF8E1;
+  }
+
+  .modal-close {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.25);
+    color: #FFF8E1;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1rem;
+    flex-shrink: 0;
+    transition: background 0.2s;
+    font-family: sans-serif;
+  }
+
+  .modal-close:hover { background: rgba(255,255,255,0.25); }
+
+  .modal-body { padding: 1.5rem; }
+
+  .modal-id-badge {
+    display: inline-block;
+    background: var(--emerald);
+    color: #FFF8E1;
+    font-size: 0.78rem;
+    padding: 3px 12px;
+    border-radius: 20px;
+    margin-bottom: 1rem;
+  }
+
+  .hadith-content-text {
+    font-size: 1.15rem;
+    line-height: 2;
+    color: var(--ink);
+    text-align: justify;
+  }
+
+  .hadith-content-text strong {
+    color: var(--emerald);
+  }
+
+  .modal-rawy {
+    margin-top: 1.2rem;
+    padding-top: 0.8rem;
+    border-top: 1px solid var(--parchment-deep);
+    font-size: 0.85rem;
+    color: var(--ink-light);
+    opacity: 0.75;
+    text-align: left;
+    direction: rtl;
+  }
+
+  .modal-hint-box {
+    background: var(--gold-pale);
+    border: 1px dashed var(--gold);
+    border-radius: 10px;
+    padding: 0.7rem 1rem;
+    margin-top: 1rem;
+    font-size: 0.92rem;
+    color: var(--ink-light);
+    font-style: italic;
+    line-height: 1.7;
+  }
+
+  .modal-hint-label {
+    font-weight: 700;
+    color: var(--gold);
+    font-style: normal;
+    display: block;
+    margin-bottom: 0.2rem;
+    font-size: 0.82rem;
+  }
+
+  .bismillah {
+    text-align: center;
+    color: var(--gold);
+    font-size: 1.3rem;
+    margin-bottom: 1.5rem;
+    opacity: 0.85;
+  }
+
+  /* ── TESTS && FORMS ── */
+  .diff-added { color: #e53e3e; text-decoration: line-through; opacity: 0.8; }
+  .diff-removed { cursor: pointer; color: #e53e3e; font-size: 1.1em; margin: 0 0.1rem; }
+  .diff-removed-text { display: none; font-size: 0.9em; background: #fff0f0; border: 1px dashed #e53e3e; border-radius: 4px; padding: 0 0.4rem; margin: 0 0.2rem; }
+  .diff-removed.expanded .diff-removed-text { display: inline; }
+  .diff-removed.expanded .diff-removed-icon { display: none; }
+  .test-writing-area { width: 100%; min-height: 120px; margin-top: 1.5rem; padding: 1rem; font-family: 'Amiri', serif; font-size: 1.25rem; background: #fff; border: 1px solid var(--border); border-radius: 8px; resize: vertical; direction: rtl; color: var(--ink); }
+  .test-writing-area:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 2px rgba(218, 165, 32, 0.2); }
+  .correction-result { margin-top: 1.5rem; padding: 1.5rem; background: #FFFDF7; border: 1.5px dashed var(--gold); border-radius: 8px; font-size: 1.35rem; line-height: 2; color: var(--ink); text-align: justify; }
+  .test-btn { background: var(--gold); color: var(--ink); font-size: 1.1rem; padding: 0.75rem 2rem; border-radius: 30px; font-weight: 700; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border: none; cursor: pointer; font-family: 'Amiri', serif; transition: all 0.25s ease; }
+  .test-btn:hover { background: var(--gold-light); transform: translateY(-2px); }
+  .settings-form { display: flex; flex-direction: column; gap: 1.2rem; text-align: right; }
+  .form-group label { display: block; margin-bottom: 0.5rem; color: var(--ink); font-weight: bold; }
+  .form-group select { width: 100%; padding: 0.6rem; border-radius: 6px; border: 1px solid var(--border); font-family: 'Amiri', serif; font-size: 1rem; background: #fff; }
+
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--parchment); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  @media (max-width: 600px) {
+    .settings-dropdown { position: absolute; top: 1rem; right: 1rem; }
+    .settings-dropdown select { font-size: 0.85rem; padding: 0.2rem 0.4rem; }
+    .header h1 { font-size: 1.5rem; }
+    .main-container { padding: 1.2rem 1rem; }
+    .hadith-grid { grid-template-columns: 1fr; }
+    .grid-layout { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="settings-dropdown">
+    <select id="front-toggle" onchange="toggleFrontView()">
+      <option value="show">إظهار عنوان الباب</option>
+      <option value="hide">إخفاء عنوان الباب</option>
+    </select>
+  </div>
+  <div class="header-ornament">— ✦ —</div>
+  <h1>الْجَمْعُ بَيْنَ الصَّحِيحَيْنِ</h1>
+</header>
+
+<div class="main-container">
+
+  <!-- SCREEN 1: KITAB LIST -->
+  <div id="screen-kitabs" class="screen active">
+    <div class="bismillah">﷽</div>
+    <div style="text-align: center; margin-bottom: 2rem;">
+      <button class="test-btn" onclick="openTestModal()">
+        <span>اختبار</span>
+        <span style="font-size: 1.2rem; margin-right: 0.5rem;">📝</span>
+      </button>
+    </div>
+    <p class="section-label">اختر الكتاب الذي تريد مراجعته</p>
+    <div class="grid-layout" id="kitabs-grid"></div>
+  </div>
+
+  <!-- SCREEN 2: RANGE LIST -->
+  <div id="screen-ranges" class="screen">
+    <div class="nav-bar">
+      <button class="nav-btn" onclick="showKitabsScreen()">العودة إلى الكتب</button>
+    </div>
+    <div class="title-bar">
+      <div class="title-bar-name" id="ranges-kitab-name"></div>
+    </div>
+    <p class="section-label" style="margin-top:1rem;">اختر نطاق الأحاديث</p>
+    <div class="grid-layout" id="ranges-grid"></div>
+  </div>
+
+  <!-- SCREEN 3: HADITH CARDS -->
+  <div id="screen-hadith" class="screen">
+    <div class="nav-bar">
+      <button class="nav-btn" id="prev-range-btn" onclick="goPrevRange()">&#x2192; النطاق السابق</button>
+      <button class="nav-btn" onclick="showRangesScreen(currentKitabName)">العودة إلى النطاقات</button>
+      <button class="nav-btn" id="next-range-btn" onclick="goNextRange()">النطاق التالي &#x2190;</button>
+    </div>
+    <div class="title-bar">
+      <div class="title-bar-label" id="detail-range-label"></div>
+      <div class="title-bar-name" id="detail-kitab-name"></div>
+    </div>
+    <div class="hadith-grid" id="hadith-grid"></div>
+  </div>
+
+  <!-- SCREEN 4: TEST SCREEN -->
+  <div id="screen-test" class="screen">
+    <div class="nav-bar">
+      <button class="nav-btn" onclick="exitTest()">الخروج من الاختبار</button>
+    </div>
+    <div class="title-bar">
+      <div class="title-bar-label" id="test-progress"></div>
+      <div class="title-bar-name" id="test-kitab-title"></div>
+    </div>
+    
+    <div class="hadith-card" id="test-card-container" style="cursor: pointer; min-height: 250px; display: flex; flex-direction: column; justify-content: center; align-items: center; margin-top: 2rem; padding: 2rem;" onclick="revealTestAnswerCheck(event)">
+      <div id="test-card-front" style="width: 100%; text-align: center;"></div>
+      
+      <div id="test-writing-section" style="width: 100%; display: none; text-align: center;">
+        <textarea id="test-writing-input" class="test-writing-area" placeholder="اكتب نص الحديث هنا..." onclick="event.stopPropagation()"></textarea>
+        <button class="test-btn" style="margin-top: 1.5rem; width: 100%; max-width: 250px;" onclick="event.stopPropagation(); evaluateWriting()">تصحيح</button>
+      </div>
+      <div id="test-correction-result" class="correction-result" style="display: none; width: 100%;"></div>
+
+      <div id="test-card-back" style="width: 100%; display: none; text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--border);"></div>
+      <div id="test-tap-hint" class="tap-hint" style="margin-top: 2rem;">انقر لإظهار الإجابة</div>
+    </div>
+
+    <div id="test-actions" style="display: none; justify-content: center; gap: 1rem; margin-top: 2rem; flex-wrap: wrap;">
+      <button class="nav-btn" style="background: var(--gold); color: var(--ink);" onclick="retryTestHadith()">أعد الحديث</button>
+      <button class="nav-btn" id="test-next-btn" onclick="nextTestHadith()">الحديث التالي &#x2190;</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- TEST MODAL -->
+<div class="modal-overlay" id="test-modal" onclick="closeTestModalOnOverlay(event)">
+  <div class="modal-box" style="max-width: 500px; padding: 2rem;">
+    <button class="modal-close" style="position: absolute; top: 1rem; left: 1rem; color: var(--ink); border-color: var(--border);" onclick="closeTestModal()">✕</button>
+    <h2 style="color: var(--emerald); text-align: center; margin-bottom: 1.5rem;">إعدادات الاختبار</h2>
+    <div class="settings-form">
+      <div class="form-group">
+        <label>نوع الاختبار:</label>
+        <select id="test-mode">
+          <option value="sequential">اختبار مرتب</option>
+          <option value="random">اختبار عشوائي</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>طريقة الإجابة:</label>
+        <select id="test-answer-method">
+          <option value="without_writing">بدون كتابة</option>
+          <option value="with_writing">بكتابة</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>الوجه الأمامي:</label>
+        <select id="test-front-type">
+          <option value="show">إظهار عنوان الباب</option>
+          <option value="hide">إخفاء عنوان الباب</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>اختبار في كتاب:</label>
+        <select id="test-start-kitab"></select>
+      </div>
+      <button class="test-btn" style="width: 100%; margin-top: 1rem;" onclick="startTest()">ابدأ الاختبار</button>
+    </div>
+  </div>
+</div>
+
+<!-- HADITH MODAL -->
+<div class="modal-overlay" id="modal" onclick="closeModalOnOverlay(event)">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-sahabi-info">
+        <div class="modal-label">الصحابي الراوي</div>
+        <div class="modal-sahabi-name" id="modal-sahabi"></div>
+      </div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-id-badge" id="modal-id"></div>
+      <div class="hadith-content-text" id="modal-content"></div>
+      <div class="modal-rawy" id="modal-rawy"></div>
+      <div class="modal-hint-box" id="modal-hint-container">
+        <span class="modal-hint-label">✦ التلميح</span>
+        <span id="modal-hint"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ════════════════════════════════════════════════════════
+   ★  DATA FETCH & PARSING  ★
+   ════════════════════════════════════════════════════════ */
+let HADITH_DATA = [];
+let KITABS_MAP = {}; // kitab_name -> array of hadiths
+let KITABS_LIST = [];
+let KITAB_RANGES = {}; // kitab_name -> array of objects { title, hadiths }
+
+async function loadHadithData() {
+  try {
+    const res = await fetch('./hadith.json');
+    HADITH_DATA = await res.json();
+    processData();
+    renderKitabs();
+  } catch (error) {
+    console.error("Error loading hadith data:", error);
+  }
+}
+
+function processData() {
+  KITABS_MAP = {};
+  KITABS_LIST = [];
+  KITAB_RANGES = {};
+
+  let babCounts = {};
+  HADITH_DATA.forEach(h => {
+    let k = h.kitab_name || "كتاب غير معروف";
+    let key = k + '|' + h.bab_name;
+    babCounts[key] = (babCounts[key] || 0) + 1;
+  });
+
+  let babCurrentIdx = {};
+
+  HADITH_DATA.forEach(h => {
+    let k = h.kitab_name || "كتاب غير معروف";
+    if (!KITABS_MAP[k]) {
+      KITABS_MAP[k] = [];
+      KITABS_LIST.push(k);
+    }
+    
+    let key = k + '|' + h.bab_name;
+    babCurrentIdx[key] = (babCurrentIdx[key] || 0) + 1;
+    h.bab_index = babCurrentIdx[key];
+    h.bab_total = babCounts[key];
+
+    KITABS_MAP[k].push(h);
+  });
+
+  KITABS_LIST.forEach(k => {
+    KITAB_RANGES[k] = createRanges(KITABS_MAP[k]);
+  });
+}
+
+function createRanges(hadiths) {
+  let ranges = [];
+  let currentChunk = [];
+  
+  for(let i=0; i<hadiths.length; i++) {
+    currentChunk.push(hadiths[i]);
+    
+    let isLastInKitab = (i === hadiths.length - 1);
+    let isLastInBab = isLastInKitab ? true : (hadiths[i].bab_name !== hadiths[i+1].bab_name);
+    
+    // Rule: 10 + or - 2 to finish at the last hadith in bab.
+    if ((currentChunk.length >= 8 && isLastInBab) || currentChunk.length >= 12 || isLastInKitab) {
+      let startId = currentChunk[0].id;
+      let endId = currentChunk[currentChunk.length - 1].id;
+      let isSingle = (startId == endId);
+      ranges.push({
+        title: isSingle ? `الحديث ${toArabicNum(startId)}` : `${toArabicNum(startId)} - ${toArabicNum(endId)}`,
+        hadiths: currentChunk
+      });
+      currentChunk = [];
+    }
+  }
+  return ranges;
+}
+
+/* ════════════════════════════════════════════════════════
+   ★  RENDER UI  ★
+   ════════════════════════════════════════════════════════ */
+let currentKitabName = null;
+let currentRangeIndex = 0;
+
+function switchScreen(screenId) {
+  document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
+  document.getElementById(screenId).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function renderKitabs() {
+  const grid = document.getElementById('kitabs-grid');
+  grid.innerHTML = '';
+  
+  const testSelect = document.getElementById('test-start-kitab');
+  if (testSelect) testSelect.innerHTML = '';
+  
+  KITABS_LIST.forEach((kitab, index) => {
+    const btn = document.createElement('button');
+    btn.className = 'card-btn';
+    btn.innerHTML = `
+      <div class="card-btn-title">${kitab}</div>
+      <div class="card-btn-desc">${toArabicNum(String(KITABS_MAP[kitab].length))} أحاديث</div>
+    `;
+    btn.onclick = () => showRangesScreen(kitab);
+    grid.appendChild(btn);
+
+    if (testSelect) {
+      const opt = document.createElement('option');
+      opt.value = kitab;
+      opt.textContent = kitab;
+      testSelect.appendChild(opt);
+    }
+  });
+}
+
+function showKitabsScreen() {
+  switchScreen('screen-kitabs');
+}
+
+function showRangesScreen(kitabName) {
+  currentKitabName = kitabName;
+  const ranges = KITAB_RANGES[kitabName];
+  
+  document.getElementById('ranges-kitab-name').textContent = kitabName;
+  
+  const grid = document.getElementById('ranges-grid');
+  grid.innerHTML = '';
+  
+  ranges.forEach((range, index) => {
+    const btn = document.createElement('button');
+    btn.className = 'card-btn';
+    btn.style.textAlign = 'center';
+    btn.innerHTML = `
+      <div class="card-btn-subtitle">نطاق الأحاديث</div>
+      <div class="card-btn-title" style="direction:ltr;">${range.title}</div>
+      <div class="card-btn-desc">${toArabicNum(String(range.hadiths.length))} أحاديث</div>
+    `;
+    btn.onclick = () => showHadithsScreen(index);
+    grid.appendChild(btn);
+  });
+  
+  switchScreen('screen-ranges');
+}
+
+function showHadithsScreen(rangeIndex) {
+  currentRangeIndex = rangeIndex;
+  const ranges = KITAB_RANGES[currentKitabName];
+  const range = ranges[rangeIndex];
+  
+  document.getElementById('detail-kitab-name').textContent = currentKitabName;
+  document.getElementById('detail-range-label').textContent = 'نطاق ' + range.title;
+  
+  document.getElementById('prev-range-btn').disabled = (rangeIndex === 0);
+  document.getElementById('next-range-btn').disabled = (rangeIndex === ranges.length - 1);
+  
+  const grid = document.getElementById('hadith-grid');
+  grid.innerHTML = '';
+  
+  range.hadiths.forEach(h => {
+    const card = document.createElement('div');
+    card.className = 'hadith-card';
+    card.innerHTML = `
+      <div class="hadith-card-front-title">
+        ${h.bab_name} ${h.bab_total > 1 ? '<span style="font-size: 1.3rem;">' + toEmojiNum(String(h.bab_index)) + '</span>' : ''}
+      </div>
+      <div class="divider"></div>
+      <div class="hint-section">
+        <button class="hint-btn" id="hint-btn-${h.id}" onclick="showHint(event,'${h.id}')">تلميح</button>
+        <div class="hint-text-display" id="hint-text-${h.id}">${h.hint}</div>
+      </div>
+      <div class="tap-hint">اضغط على البطاقة لعرض الحديث كاملاً</div>
+    `;
+    card.addEventListener('click', (e) => {
+      if (e.target.classList.contains('hint-btn')) return;
+      openModal(h);
+    });
+    grid.appendChild(card);
+  });
+  
+  switchScreen('screen-hadith');
+}
+
+function goPrevRange() {
+  if (currentRangeIndex > 0) {
+    showHadithsScreen(currentRangeIndex - 1);
+  }
+}
+
+function goNextRange() {
+  const max = KITAB_RANGES[currentKitabName].length - 1;
+  if (currentRangeIndex < max) {
+    showHadithsScreen(currentRangeIndex + 1);
+  }
+}
+
+function showHint(event, id) {
+  event.stopPropagation();
+  const btn = document.getElementById('hint-btn-' + id);
+  const txt = document.getElementById('hint-text-' + id);
+  txt.classList.add('shown');
+  btn.disabled = true;
+  btn.style.background = 'var(--gold-pale)';
+  btn.style.color = 'var(--gold)';
+  btn.style.borderStyle = 'dashed';
+  btn.textContent = '✦ التلميح';
+}
+
+function openModal(h) {
+  document.getElementById('modal-sahabi').textContent = h.sahabi;
+  document.getElementById('modal-id').textContent = 'حديث ' + toArabicNum(h.id) + (h.rawy ? ' (' + h.rawy + ')' : '');
+  
+  const contentEl = document.getElementById('modal-content');
+  contentEl.innerHTML = '';
+  contentEl.appendChild(document.createTextNode(h.content));
+  
+  document.getElementById('modal-rawy').textContent = "كتاب: " + h.kitab_name + " — " + h.bab_name;
+  
+  if (h.hint) {
+    document.getElementById('modal-hint-container').style.display = 'block';
+    document.getElementById('modal-hint').textContent = h.hint;
+  } else {
+    document.getElementById('modal-hint-container').style.display = 'none';
+  }
+
+  document.getElementById('modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function closeModalOnOverlay(e) {
+  if (e.target === document.getElementById('modal')) closeModal();
+}
+
+document.addEventListener('keydown', e => { 
+  if (e.key === 'Escape') {
+    closeModal();
+    if (typeof closeTestModal === 'function') closeTestModal();
+  }
+});
+
+/* ════════════════════════════════════════════════════════
+   ★  TEST LOGIC  ★
+   ════════════════════════════════════════════════════════ */
+let testMode = 'sequential';
+let testAnswerMethod = 'without_writing';
+let testFrontMode = 'show';
+let testTargetKitab = null;
+let currentTestHadiths = [];
+let currentTestHadithIndex = 0;
+let isAnswerRevealed = false;
+
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+  }
+}
+
+function openTestModal() {
+  document.getElementById('test-modal').classList.add('open');
+}
+
+function closeTestModal() {
+  document.getElementById('test-modal').classList.remove('open');
+}
+
+function closeTestModalOnOverlay(e) {
+  if (e.target === document.getElementById('test-modal')) closeTestModal();
+}
+
+function exitTest() {
+  switchScreen('screen-kitabs');
+}
+
+function startTest() {
+  testMode = document.getElementById('test-mode').value;
+  testAnswerMethod = document.getElementById('test-answer-method').value;
+  testFrontMode = document.getElementById('test-front-type').value;
+  testTargetKitab = document.getElementById('test-start-kitab').value;
+  closeTestModal();
+  switchScreen('screen-test');
+  
+  // Load hadiths for the selected Kitab
+  currentTestHadiths = [...KITABS_MAP[testTargetKitab]];
+  if (testMode === 'random') {
+    shuffleArray(currentTestHadiths);
+  }
+  currentTestHadithIndex = 0;
+  renderTestCard();
+}
+
+function renderTestCard() {
+  const h = currentTestHadiths[currentTestHadithIndex];
+  isAnswerRevealed = false;
+
+  document.getElementById('test-kitab-title').textContent = testTargetKitab;
+  document.getElementById('test-progress').textContent = 'الحديث ' + toArabicNum(currentTestHadithIndex + 1) + ' من ' + toArabicNum(currentTestHadiths.length);
+
+  let frontHtml = '';
+  if (testFrontMode === 'show') {
+    frontHtml = `
+      <div class="hadith-card-front-title" style="margin-bottom:1rem;">${h.bab_name} ${h.bab_total > 1 ? '<span style="font-size: 1.3rem;">' + toEmojiNum(String(h.bab_index)) + '</span>' : ''}</div>
+      <div class="divider" style="margin: 1.5rem auto; width: 60px;"></div>
+      <button class="hint-btn" onclick="event.stopPropagation(); document.getElementById('test-card-hint').style.display='block'; this.style.display='none';">تلميح</button>
+      <div id="test-card-hint" class="hint-text-display" style="display:none; margin-top: 1.5rem; text-align: center;">${h.hint}</div>
+    `;
+  } else {
+    frontHtml = `<div class="hint-text-display" style="display:block; font-size: 1.2rem; background:transparent; border:none; text-align:center;">${h.hint}</div>`;
+  }
+  document.getElementById('test-card-front').innerHTML = frontHtml;
+
+  document.getElementById('test-card-back').innerHTML = `
+    <div style="font-size: 1.15rem; color: var(--emerald); font-weight: bold; margin-bottom: 0.3rem;">${h.sahabi}</div>
+    <div style="font-size: 0.85rem; color: var(--gold); margin-bottom: 1.5rem;">حديث ${toArabicNum(h.id)} ${h.rawy ? ' (' + h.rawy + ')' : ''}</div>
+    <div style="font-size: 1.4rem; line-height: 2; color: var(--ink); text-align: justify; margin-bottom: 1rem;">${h.content}</div>
+  `;
+
+  document.getElementById('test-card-front').style.display = 'block';
+  document.getElementById('test-card-back').style.display = 'none';
+  document.getElementById('test-actions').style.display = 'none';
+
+  if (testAnswerMethod === 'with_writing') {
+    document.getElementById('test-writing-section').style.display = 'block';
+    document.getElementById('test-writing-input').value = '';
+    document.getElementById('test-correction-result').style.display = 'none';
+    document.getElementById('test-tap-hint').style.display = 'none';
+    document.getElementById('test-card-container').style.cursor = 'default';
+  } else {
+    document.getElementById('test-writing-section').style.display = 'none';
+    document.getElementById('test-correction-result').style.display = 'none';
+    document.getElementById('test-tap-hint').style.display = 'block';
+    document.getElementById('test-tap-hint').textContent = 'انقر لإظهار الإجابة';
+    document.getElementById('test-card-container').style.cursor = 'pointer';
+  }
+}
+
+function revealTestAnswerCheck(e) {
+  if (testAnswerMethod === 'with_writing') return;
+  revealTestAnswer();
+}
+
+function evaluateWriting() {
+  if (isAnswerRevealed) return;
+  const h = currentTestHadiths[currentTestHadithIndex];
+  const submitted = document.getElementById('test-writing-input').value;
+  
+  const diff = getWordDiff(h.content, submitted);
+  const diffHtml = renderDiffHTML(diff);
+  
+  document.getElementById('test-correction-result').innerHTML = `
+    <div style="font-size:0.9rem; color:var(--emerald); font-weight:bold; margin-bottom:0.5rem;">إجابتك بعد التصحيح:</div>
+    <div>${diffHtml}</div>
+  `;
+  document.getElementById('test-correction-result').style.display = 'block';
+  document.getElementById('test-writing-section').style.display = 'none';
+  
+  revealTestAnswer();
+}
+
+function normalizeArabic(text) {
+  if (!text) return '';
+  let t = text.replace(/[\u0617-\u061A\u064B-\u0652]/g, '');
+  t = t.replace(/[أإآ]/g, 'ا');
+  t = t.replace(/ة/g, 'ه');
+  t = t.replace(/ى/g, 'ي');
+  return t;
+}
+
+function getWordDiff(original, submitted) {
+  const origWords = original.replace(/[،.؛:()«»"']/g, ' ').trim().split(/\s+/).filter(w => w);
+  const subWords = submitted.replace(/[،.؛:()«»"']/g, ' ').trim().split(/\s+/).filter(w => w);
+  
+  const normOriginal = origWords.map(normalizeArabic);
+  const normSubmitted = subWords.map(normalizeArabic);
+  
+  const dp = Array(normOriginal.length + 1).fill(null).map(() => Array(normSubmitted.length + 1).fill(0));
+  for (let i = 1; i <= normOriginal.length; i++) {
+    for (let j = 1; j <= normSubmitted.length; j++) {
+      if (normOriginal[i - 1] === normSubmitted[j - 1]) {
+        dp[i][j] = dp[i - 1][j - 1] + 1;
+      } else {
+        dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+      }
+    }
+  }
+  
+  let i = normOriginal.length;
+  let j = normSubmitted.length;
+  const result = [];
+  while (i > 0 || j > 0) {
+    if (i > 0 && j > 0 && normOriginal[i - 1] === normSubmitted[j - 1]) {
+      result.unshift({ type: 'equal', value: subWords[j - 1] });
+      i--;
+      j--;
+    } else if (j > 0 && (i === 0 || dp[i][j - 1] >= dp[i - 1][j])) {
+      result.unshift({ type: 'added', value: subWords[j - 1] });
+      j--;
+    } else if (i > 0 && (j === 0 || dp[i][j - 1] < dp[i - 1][j])) {
+      result.unshift({ type: 'removed', value: origWords[i - 1] });
+      i--;
+    }
+  }
+  
+  return result;
+}
+
+function renderDiffHTML(diff) {
+  let html = '';
+  let removedBuffer = [];
+
+  const flushRemoved = () => {
+    if (removedBuffer.length > 0) {
+      const tooltip = removedBuffer.join(' ');
+      html += ` <span class="diff-removed" onclick="this.classList.toggle('expanded')" title="اضغط لإظهار الجزء المفقود"><span class="diff-removed-icon">❌</span><span class="diff-removed-text">${tooltip}</span></span> `;
+      removedBuffer = [];
+    }
+  };
+
+  diff.forEach(item => {
+    if (item.type === 'removed') {
+      removedBuffer.push(item.value);
+    } else {
+      flushRemoved();
+      if (item.type === 'added') {
+        html += ` <span class="diff-added">${item.value}</span> `;
+      } else {
+        html += ` ${item.value} `;
+      }
+    }
+  });
+  flushRemoved();
+  return html.trim();
+}
+
+function revealTestAnswer() {
+  if (isAnswerRevealed) return;
+  isAnswerRevealed = true;
+  document.getElementById('test-card-front').style.display = 'none';
+  document.getElementById('test-card-back').style.display = 'block';
+  document.getElementById('test-tap-hint').style.display = 'none';
+  document.getElementById('test-actions').style.display = 'flex';
+  
+  const isLast = (currentTestHadithIndex === currentTestHadiths.length - 1);
+  const nextBtn = document.getElementById('test-next-btn');
+  if (isLast) {
+    nextBtn.textContent = 'إنهاء الاختبار';
+    nextBtn.onclick = exitTest;
+  } else {
+    nextBtn.textContent = 'الحديث التالي \u2190';
+    nextBtn.onclick = nextTestHadith;
+  }
+}
+
+function nextTestHadith() {
+  currentTestHadithIndex++;
+  renderTestCard();
+}
+
+function retryTestHadith() {
+  renderTestCard();
+}
+
+function toggleFrontView() {
+  const val = document.getElementById('front-toggle').value;
+  if (val === 'hide') {
+    document.body.classList.add('hide-rawy'); // CSS hides front title and lines using this class
+  } else {
+    document.body.classList.remove('hide-rawy');
+  }
+}
+
+function toArabicNum(str) {
+  return String(str).replace(/[0-9]/g, d => '٠١٢٣٤٥٦٧٨٩'[d]);
+}
+
+function toEmojiNum(numStr) {
+  const emojis = ['0️⃣','1️⃣','2️⃣','3️⃣','4️⃣','5️⃣','6️⃣','7️⃣','8️⃣','9️⃣'];
+  return String(numStr).split('').map(d => emojis[parseInt(d)]).join('');
+}
+
+// Start app
+loadHadithData();
+</script>
+</body>
+</html>

@@ -1118,8 +1118,8 @@ function normalizeArabic(text) {
 }
 
 function getWordDiff(original, submitted) {
-  const origWords = original.replace(/[،.؛:()«»"']/g, ' ').trim().split(/\s+/).filter(w => w);
-  const subWords = submitted.replace(/[،.؛:()«»"']/g, ' ').trim().split(/\s+/).filter(w => w);
+  const origWords = original.replace(/[،.؛:()«»"'؟!?\-]/g, ' ').trim().split(/\s+/).filter(w => w);
+  const subWords = submitted.replace(/[،.؛:()«»"'؟!?\-]/g, ' ').trim().split(/\s+/).filter(w => w);
   
   const normOriginal = origWords.map(normalizeArabic);
   const normSubmitted = subWords.map(normalizeArabic);

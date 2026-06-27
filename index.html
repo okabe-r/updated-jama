@@ -527,7 +527,7 @@
   }
 
   /* ── TESTS && FORMS ── */
-  .diff-added { color: #e53e3e; text-decoration: line-through; opacity: 0.8; }
+  .diff-added { color: #6f2da8; text-decoration: line-through; opacity: 0.8; }
   .diff-removed { cursor: pointer; color: #e53e3e; font-size: 1.1em; margin: 0 0.1rem; }
   .diff-removed-text { display: none; font-size: 0.9em; background: #fff0f0; border: 1px dashed #e53e3e; border-radius: 4px; padding: 0 0.4rem; margin: 0 0.2rem; }
   .diff-removed.expanded .diff-removed-text { display: inline; }
@@ -1118,8 +1118,8 @@ function normalizeArabic(text) {
 }
 
 function getWordDiff(original, submitted) {
-  const origWords = original.replace(/[،.؛:()«»"'؟!?\-]/g, ' ').trim().split(/\s+/).filter(w => w);
-  const subWords = submitted.replace(/[،.؛:()«»"'؟!?\-]/g, ' ').trim().split(/\s+/).filter(w => w);
+  const origWords = original.replace(/[،.؛:()«»"'؟!?\-﴿﴾]/g, ' ').trim().split(/\s+/).filter(w => w);
+  const subWords = submitted.replace(/[،.؛:()«»"'؟!?\-﴿﴾]/g, ' ').trim().split(/\s+/).filter(w => w);
   
   const normOriginal = origWords.map(normalizeArabic);
   const normSubmitted = subWords.map(normalizeArabic);

@@ -351,12 +351,6 @@
     color: #fff;
   }
 
-  .hint-btn:disabled {
-    cursor: default;
-    background: var(--gold-pale);
-    border-style: dashed;
-  }
-
   .test-inline-btn {
     background: var(--emerald-pale);
     border: 1px solid var(--emerald);
@@ -1242,7 +1236,7 @@ function showHadithsScreen(rangeIndex) {
         </div>
         <div class="divider"></div>
         <div class="hint-section">
-          <button class="hint-btn" id="hint-btn-${h.id}" onclick="showHint(event,'${h.id}')">✦ التلميح</button>
+          <button class="hint-btn" id="hint-btn-${h.id}" onclick="toggleHint(event,'${h.id}')">✦ التلميح</button>
           <button class="test-inline-btn" onclick="startSingleTest(event, '${h.id}')">اختبار</button>
           <button class="mask-inline-btn" onclick="openMaskScreen(event, '${h.id}')">حجب</button>
           <div class="hint-text-display" id="hint-text-${h.id}">${h.hint || ''}</div>
@@ -1284,12 +1278,12 @@ function goBackFromHadith() {
   }
 }
 
-function showHint(event, id) {
+function toggleHint(event, id) {
   event.stopPropagation();
-  const btn = document.getElementById('hint-btn-' + id);
   const txt = document.getElementById('hint-text-' + id);
-  if (txt) txt.classList.add('shown');
-  if (btn) btn.disabled = true;
+  if (txt) {
+    txt.classList.toggle('shown'); // <-- Adds .shown if hidden, removes .shown if visible
+  }
 }
 
 /* ── النافذة المنبثقة للحديث ── */

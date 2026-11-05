@@ -456,13 +456,12 @@
     font-weight: normal;
   }
 
-  /* Allow elements inside red spans to inherit the red color */
-.hadith-text-rendered [style*="#c00000"] b,
-.hadith-text-rendered [style*="#c00000"] strong,
-.hadith-text-rendered .text-red b,
-.hadith-text-rendered .text-red strong {
-  color: inherit !important;
-}
+  .hadith-text-rendered [style*="#c00000"] b,
+  .hadith-text-rendered [style*="#c00000"] strong,
+  .hadith-text-rendered .text-red b,
+  .hadith-text-rendered .text-red strong {
+    color: inherit !important;
+  }
 
   /* اللون الكحلي الغامق: السند، اسم الصحابي، الآيات القرآنية */
   .hadith-text-rendered [style*="#002060"],
@@ -491,35 +490,40 @@
     font-weight: bold;
   }
 
-  /* ── شاشة الحجب والضبابية ── */
+  /* ── شاشة الحجب والضبابية (المثبتة في الأسفل) ── */
   .mask-sticky-container {
-    position: sticky;
-    top: 15px;
+    position: fixed;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 2rem);
+    max-width: 680px;
     z-index: 100;
-    background: rgba(245, 236, 215, 0.94);
-    backdrop-filter: blur(8px);
+    background: rgba(245, 236, 215, 0.96);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     border: 1.5px solid var(--border);
-    border-radius: 14px;
-    padding: 0.8rem 1.2rem;
-    margin-bottom: 1.5rem;
-    box-shadow: 0 4px 16px var(--shadow);
+    border-radius: 16px;
+    padding: 0.75rem 1rem;
+    box-shadow: 0 6px 24px var(--shadow), 0 0 0 1px rgba(255, 255, 255, 0.4) inset;
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 0.7rem;
+    gap: 0.6rem;
     flex-wrap: wrap;
   }
 
   .mask-btn {
     border: none;
     border-radius: 8px;
-    padding: 0.55rem 1.3rem;
+    padding: 0.55rem 1.15rem;
     font-family: 'Amiri', serif;
     font-size: 1.05rem;
     font-weight: 700;
     cursor: pointer;
     transition: all 0.2s ease;
     box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    white-space: nowrap;
   }
 
   .mask-btn-emerald {
@@ -548,6 +552,7 @@
   }
   .mask-btn-nav:hover {
     background: #4b5563;
+    transform: translateY(-1px);
   }
 
   .mask-content-card {
@@ -557,7 +562,8 @@
     padding: 2.2rem 2rem;
     position: relative;
     box-shadow: 0 4px 20px var(--shadow);
-    margin-bottom: 3rem;
+    /* مساحة كافية بالأسفل حتى لا تحجب الأزرار العائمة آخر كلمات الحديث */
+    margin-bottom: 6.5rem;
   }
 
   .mask-content-card::after {
@@ -833,8 +839,24 @@
     .grid-layout { grid-template-columns: 1fr; }
     .modal-body { padding: 1.2rem; }
     .hadith-text-rendered { font-size: 1.15rem; line-height: 2; }
-    .mask-sticky-container { padding: 0.6rem 0.8rem; gap: 0.5rem; }
-    .mask-btn { padding: 0.45rem 0.8rem; font-size: 0.95rem; }
+    
+    /* شريط الأزرار في الهواتف */
+    .mask-sticky-container {
+      bottom: 10px;
+      padding: 0.5rem 0.6rem;
+      gap: 0.35rem;
+      width: calc(100% - 1rem);
+      border-radius: 12px;
+    }
+    .mask-btn {
+      padding: 0.45rem 0.65rem;
+      font-size: 0.88rem;
+      flex: 1 1 auto;
+      text-align: center;
+    }
+    .mask-content-card {
+      margin-bottom: 7.5rem;
+    }
   }
 </style>
 </head>
@@ -925,15 +947,6 @@
 
   <!-- الشاشة 5: شاشة الحجب والتسميع بالضبابية -->
   <div id="screen-mask" class="screen">
-    <!-- الشريط العلوي الثابت للأزرار أثناء التمرير -->
-    <div class="mask-sticky-container">
-      <button class="mask-btn mask-btn-emerald" onclick="revealMaskWords(1)">كشف كلمة</button>
-      <button class="mask-btn mask-btn-emerald" onclick="revealMaskWords(5)">كشف ٥ كلمات</button>
-      <button class="mask-btn mask-btn-emerald" onclick="revealMaskAll()">كشف الكل</button>
-      <button class="mask-btn mask-btn-gold" onclick="resetMask()">إعادة الحجب</button>
-      <button class="mask-btn mask-btn-nav" onclick="exitMask()">العودة للأحاديث</button>
-    </div>
-
     <div class="title-bar">
       <div class="title-bar-label" id="mask-hadith-label"></div>
       <div class="title-bar-name" id="mask-hadith-title"></div>
@@ -942,6 +955,15 @@
     <div class="mask-content-card">
       <div id="mask-sahabi-header" style="font-size: 1.35rem; color: var(--emerald); font-weight: bold; margin-bottom: 0.5rem; text-align: right;"></div>
       <div class="hadith-text-rendered" id="mask-hadith-container"></div>
+    </div>
+
+    <!-- الشريط السفلي الثابت للأزرار (Fixed at Bottom) -->
+    <div class="mask-sticky-container">
+      <button class="mask-btn mask-btn-emerald" onclick="revealMaskWords(1)">كشف كلمة</button>
+      <button class="mask-btn mask-btn-emerald" onclick="revealMaskWords(5)">كشف ٥ كلمات</button>
+      <button class="mask-btn mask-btn-emerald" onclick="revealMaskAll()">كشف الكل</button>
+      <button class="mask-btn mask-btn-gold" onclick="resetMask()">إعادة الحجب</button>
+      <button class="mask-btn mask-btn-nav" onclick="exitMask()">العودة للأحاديث</button>
     </div>
   </div>
 
@@ -1081,10 +1103,6 @@ function createRanges(hadiths) {
   return ranges;
 }
 
-/**
- * دالة التلوين المتقدمة:
- * تقبل النص سواء أكان خاماً أو يحتوي وسوماً، وتقوم بتفسيره وتلوينه مطابقةً للكتاب.
- */
 function renderHadithHtml(content) {
   if (!content) return '';
 
@@ -1092,28 +1110,17 @@ function renderHadithHtml(content) {
   let html = content;
 
   if (!hasHtmlTags) {
-    // 1. تلوين الآيات القرآنية بين ﴿...﴾ بالكحلي
     html = html.replace(/﴿([^﴾]+)﴾/g, '<span class="quran-ayah">﴿$1﴾</span>');
-
-    // 2. تلوين السند في البداية بالكحلي العريض
     html = html.replace(/^([^\n:«»]+(?:رَضِيَ اللَّهُ عَنْهُ|رَضِيَ اللَّهُ عَنْهَا|رَضِيَ اللَّهُ عَنْهُمَا|رَضِيَ اللَّهُ عَنْهُمْ|ؓ)\s*[,،:]?\s*(?:قَالَ|قَالَتْ)?\s*[:،]?)/m, '<span class="auto-sanad">$1</span>');
-
-    // 3. تلوين أسطر الروايات الأخرى المسبوقة بنقطة أو نجمة بالأحمر
     html = html.replace(/(?:^|\n)([\*•]\s*\([^\)]+\))/g, '\n<span class="text-red">$1</span>');
     html = html.replace(/(?:^|\n)([\*•]\s*وَفِي حَدِيثِ[^\n]+)/g, '\n<span class="text-red">$1</span>');
-
-    // 4. تلوين عبارات (وَفِي رِوَايَةٍ: ...) داخل الأقواس بالأحمر
     html = html.replace(/([(\[][\s]*وَفِي رِوَايَةٍ[\s\S]*?[)\]])/g, '<span class="text-red">$1</span>');
-
-    // تحويل نهايات الأسطر إلى <br>
     html = html.replace(/\r?\n/g, '<br>');
   } else {
     html = html.replace(/\r?\n/g, '<br>');
   }
 
-  // تنظيف أي تكرار غير مقصود لـ <br> أكثر من مرتين متتاليتين
   html = html.replace(/(?:<br\s*\/?>\s*){3,}/gi, '<br><br>');
-
   return html;
 }
 
@@ -1282,7 +1289,7 @@ function toggleHint(event, id) {
   event.stopPropagation();
   const txt = document.getElementById('hint-text-' + id);
   if (txt) {
-    txt.classList.toggle('shown'); // <-- Adds .shown if hidden, removes .shown if visible
+    txt.classList.toggle('shown');
   }
 }
 
@@ -1597,7 +1604,6 @@ function openMaskScreen(event, hadithId) {
   const container = document.getElementById('mask-hadith-container');
   container.innerHTML = renderHadithHtml(h.content);
 
-  // تحويل نصوص الحديث إلى كلمات محجوبة مع الحفاظ على الألوان والتنسيقات
   totalMaskWordsCount = wrapWordsInContainer(container);
   currentMaskRevealedWords = 0;
   updateMaskDisplay();
@@ -1605,10 +1611,6 @@ function openMaskScreen(event, hadithId) {
   switchScreen('screen-mask');
 }
 
-/**
- * دالة ذكية تطوف على جميع TextNodes وتغلف كل كلمة بـ span
- * هذا يضمن الحفاظ التام على وسوم الألوان، الخطوط، ونهايات الأسطر <br>
- */
 function wrapWordsInContainer(rootEl) {
   const walker = document.createTreeWalker(rootEl, NodeFilter.SHOW_TEXT, null, false);
   const textNodes = [];
@@ -1661,7 +1663,6 @@ function updateMaskDisplay() {
 }
 
 function onMaskWordClick(index) {
-  // كشف الكلمة المضغوطة وجميع الكلمات التي تسبقها
   currentMaskRevealedWords = index + 1;
   updateMaskDisplay();
 }
